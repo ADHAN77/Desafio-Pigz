@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../routes';
 import * as S from './styles';
 import { HeaderWrapper } from './styles';
+import { Image } from 'react-native'
 
 const logo = require('../../../assets/logoPigz/pigz-logotipo-branco.png');
 const IconGoogle = require('../../../assets/Icon_google/logo_googleg_48dp.png');
-import Eye    from '../../../assets/Eye/eye.svg';
-import EyeOff from '../../../assets/Eye/eye-off.svg';
+const Eye = require('../../../assets/Eye/eye.png');
+const EyeOff = require('../../../assets/Eye/eye-off.png');
 
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
 export default function Login() {
   const navigation = useNavigation<NavigationProp>();
-   const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <S.Container>
@@ -34,21 +36,23 @@ export default function Login() {
         autoCapitalize="none"
       />
 
-      <S.Label style={{ marginTop: 16 }}>Senha</S.Label>
-      {/* aqui usamos o wrapper */}
-      <S.InputWrapper>
-        <S.PasswordInput
-          placeholder="********"
-          secureTextEntry={!showPassword}
-          autoCapitalize="none"
-        />
-        <TouchableOpacity onPress={() => setShowPassword(v => !v)}>
-          {showPassword
-            ? <EyeOff width={24} height={24} fill="#333" />
-            : <Eye    width={24} height={24} fill="#333" />
-          }
-        </TouchableOpacity>
-      </S.InputWrapper>
+    <S.Label style={{ marginTop: 16 }}>Senha</S.Label>
+    <S.InputWrapper>
+      <S.PasswordInput
+        placeholder="********"
+        secureTextEntry={!showPassword}
+        autoCapitalize="none"
+        value={password}
+        onChangeText={setPassword}
+      />
+      <S.EyeButton onPress={() => setShowPassword(v => !v)}>
+      {showPassword ? (
+        <Image source={Eye} style={{ width: 24, height: 24 }} />
+      ) : (
+        <Image source={EyeOff} style={{ width: 24, height: 24 }} />
+      )}
+      </S.EyeButton>
+    </S.InputWrapper>
 
       <TouchableOpacity>
         <S.Link>Esqueci minha senha</S.Link>

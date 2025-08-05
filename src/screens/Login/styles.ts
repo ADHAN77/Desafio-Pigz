@@ -1,24 +1,30 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
+import { colors } from '../../styles/colors';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const { height } = Dimensions.get('window');
 const isSmallScreen = height < 700;
 
 
-export const GradientButton = styled(LinearGradient).attrs({
+export const GradientButton = styled(
+  LinearGradient as unknown as React.ComponentType<any>
+).attrs({
   colors: ['#FF881F', '#FA641E'],
   start: { x: 0, y: 0 },
   end: { x: 1, y: 0 },
 })`
   border-radius: 20px;
-  margin-top: ${isSmallScreen ? '16px' : '24px'};
+  margin-top: ${() => {
+    const { width } = Dimensions.get('window');
+    return width < 768 ? '16px' : '24px';
+  }};
 `;
 
 export const Container = styled.View`
   flex: 1;
   padding: 24px;
-  background-color: #fff;
+  background-color: ${colors.background};
 `;
 
 export const HeaderWrapper = styled.View`
@@ -38,7 +44,7 @@ export const Subtitle = styled.Text`
   font-family: 'Poppins_600SemiBold';
   font-size: 18px;
   text-align: center;
-  color: #333333;
+  color: ${colors.grayDark};
 `;
 
 export const Title = styled.Text`
@@ -52,14 +58,14 @@ export const Title = styled.Text`
 export const Label = styled.Text`
 font-family: 'Poppins_400Regular';
   font-size: 13px;
-  color: #676767;
+  color: ${colors.grayMedium};
   margin-bottom: 6px;
 `;
 
 
 export const Input = styled.TextInput`
   border-width: 1px;
-  border-color: #FA641E;
+  border-color: ${colors.border};
   border-radius: 20px;
   padding: 16px 16px 16px 16px;
   font-size: 16px;
@@ -68,7 +74,7 @@ export const Input = styled.TextInput`
 export const Link = styled.Text`
   font-family: 'Poppins_400Regular';
   font-size: 14px;
-  color: #676767;
+  color: ${colors.grayMedium};
   text-align: left;
   margin-top: 8px;
   text-decoration: underline;
@@ -83,7 +89,7 @@ export const Button = styled.TouchableOpacity`
 `;
 
 export const ButtonText = styled.Text`
-  color: #FFFFFF;
+  color: ${colors.white};
   font-family: 'Poppins_500Medium';
   font-size: 16px;
 `;
@@ -97,13 +103,13 @@ export const RowCenter = styled.View`
 export const Text = styled.Text`
   font-family: 'Poppins_400Regular';
   font-size: 13px;
-  color: #676767;
+  color: ${colors.grayMedium};
 `;
 
 export const LinkCriar = styled.Text`
   font-family: 'Poppins_400Regular';
   font-size: 13px;
-  color: #FA641E;
+  color: ${colors.orange};
 `
 
 export const SocialRow = styled.View`
@@ -115,13 +121,13 @@ export const SocialRow = styled.View`
 export const Line = styled.View`
   flex: 1;
   height: 1px;
-  background-color: #707070;
+  background-color: ${colors.grayLine};
 `;
 
 export const SocialText = styled.Text`
   font-family: 'Poppins_600SemiBold';
   font-size: 13px;
-  color: #333333;
+  color: ${colors.grayDark};
   text-align: left;
   margin-right: 7px;
 `;
@@ -130,7 +136,7 @@ export const GoogleButton = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   border-width: 1px;
-  border-color: #9F9F9F;
+  border-color: ${colors.grayLight};
   border-radius: 20px;
   padding: ${isSmallScreen ? '12px' : '16px'};
   margin-top: ${isSmallScreen ? '12px' : '16px'};
@@ -144,7 +150,7 @@ export const GoogleIcon = styled.Image`
 
 export const GoogleText = styled.Text`
   font-size: 16px;
-  color: #676767;
+  color: ${colors.grayMedium};
   font-family: 'Poppins_500Medium';
   text-align: center;
 `;
@@ -154,16 +160,27 @@ export const InputWrapper = styled.View`
   flex-direction: row;
   align-items: center;
   border-width: 1px;
-  border-color: #FA641E;
+  border-color: ${colors.border};
   border-radius: 20px;
-  padding: 0 16px;
-  margin-top: 6px;        
+  padding: 0 12px;
+  margin-top: 6px;
+  height: 48px;
+  background-color: ${colors.white};
 `;
 
-
-export const PasswordInput = styled.TextInput`
+export const PasswordInput = styled.TextInput.attrs({
+  placeholderTextColor: '#4B4B4B',
+  underlineColorAndroid: 'transparent'
+})`
   flex: 1;
   height: 48px;
   font-size: 16px;
-  padding: 16px;
+  background-color: transparent;
+  color: ${colors.grayDark};
+`;
+
+export const EyeButton = styled.TouchableOpacity`
+  padding-left: 8px;
+  justify-content: center;
+  align-items: center;
 `;
